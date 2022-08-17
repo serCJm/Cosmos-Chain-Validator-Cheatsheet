@@ -3,7 +3,7 @@ A list of common CLI commands for managing cosmos chains
 
 ## General
 <ul>
-  <li>There are two types of unit denmination in on Comos chain. Standard unit (i.e. 1 ATOM) and micro unit, the smallets unit (i.e. 1 uATOM). 1 standard unit = 1,000,000 micro units.</li>  
+  <li>There are two types of unit denomination in Cosmos chains. Standard unit (i.e. 1 ATOM) and micro unit, the smallets unit (i.e. 1 uATOM). 1 standard unit = 1,000,000 micro units.</li>  
 </ul>  
 
 ## Server Setup
