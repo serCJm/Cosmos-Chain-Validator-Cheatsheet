@@ -24,6 +24,86 @@ source $HOME/.bash_profile && \
 go version
 ```
 
+## Installation and Init
+Download and install binaries
+```
+git clone <chain-repo-link>
+cd <chain-folder-name>
+git checkout <proper-branch>
+make install
+
+<chain-process> version --long | head
+```
+Init
+```
+<chain-process> init <moniker> --chain-id <proper-chain>
+
+# set default chain-id
+<chain-process> config chain-id <proper-chain>
+```
+Create or recover a wallet
+```
+# add --recover flag to recover a wallet
+<chain-process> keys add <wallet-name>
+```
+For genesis validators only
+```
+<chain-process> add-genesis-account <name_wallet> 10000000<micro-unit>
+
+<chain-process gentx <wallet-name> 10000000<micro-unit> \
+--chain-id <proper-chain> \
+--commission-rate=0.05 \
+--commission-max-rate=0.2 \
+--commission-max-change-rate=0.05 \
+--pubkey $(<chain-process> tendermint show-validator) \
+--moniker <"moniker">
+
+cat ~/.<chain>/config/gentx/gentx-*
+```
+
+Download Genesis
+```
+wget -O $HOME/.<chain>/config/genesis.json "<genesis-link>"
+```
+Check validator state
+```
+cd && cat .<chain>/data/priv_validator_state.json
+#{
+#  "height": "0",
+#  "round": 0,
+#  "step": 0
+#}
+
+# otherwise
+<chain-process> tendermint unsafe-reset-all --home $HOME/.<chain>
+```
+Download addrbook
+```
+wget -O $HOME/.<chain>/config/addrbook.json "<addrbook-link"
+```
+Create Service File
+```
+sudo tee /etc/systemd/system/<chain-process>.service > /dev/null <<EOF
+[Unit]
+Description=seid
+After=network-online.target
+
+[Service]
+User=$USER
+ExecStart=$(which <chain>) start
+Restart=on-failure
+RestartSec=3
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload && \
+systemctl enable <chain-process> && \
+systemctl restart <chain-process> && journalctl -u <chain-process> -f -o cat
+```
+
 ## Key Management
 Display keys
 ```
