@@ -48,7 +48,7 @@ Create or recover a wallet
 ```
 For genesis validators only
 ```
-<chain-process> add-genesis-account <name_wallet> 10000000<micro-unit>
+<chain-process> add-genesis-account <wallet-name> 10000000<micro-unit>
 
 <chain-process gentx <wallet-name> 10000000<micro-unit> \
 --chain-id <proper-chain> \
